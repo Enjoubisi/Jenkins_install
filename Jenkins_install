@@ -1,0 +1,39 @@
+#!/bin/bash
+
+#Author: Eric
+#Date:June 2022
+
+
+
+#Install Java
+
+ yum install java-1.8.0-openjdk-devel -y
+
+#Enable Jenkins repository with wget
+
+ wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo 
+
+#Disable key check on repository
+
+ sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/jenkins.repo
+
+#Install Jenkins
+
+ yum install jenkins -y
+
+#Start Jenkins service
+
+ systemctl start jenkins
+
+#Check Jenkins status
+
+ systemctl status jenkins
+
+#Enable Jenkins service to start on system boot
+
+ systemctl enable jenkins
+
+#Adjust firewall by opening necessary ports
+
+ firewall-cmd --permanent --zone=public --add-port=8080/tcp
+ firewall-cmd --reload
